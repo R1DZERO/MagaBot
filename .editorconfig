@@ -1,0 +1,19 @@
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+
+[*.php]
+insert_final_newline = true
+
+[*.{yaml,yml,yaml.dist,yml.dist}]
+indent_style = space
+indent_size = 2
+
+[*.json]
+indent_style = space
+indent_size = 4
+
+[Makefile]
+indent_style = tab

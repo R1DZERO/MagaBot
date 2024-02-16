@@ -1,0 +1,5 @@
+.idea
+vendor
+composer.lock
+tgtoken.txt
+src/latestUpdate.txt
