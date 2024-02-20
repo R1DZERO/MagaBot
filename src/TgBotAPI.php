@@ -32,8 +32,10 @@ class TgBotAPI
     {
         $url = sprintf(self::API_URL_PATTERN, $this->token, 'getUpdates');
 
-        $response = $this->httpClient->request('GET', $url, [
-            'query' => ['offset' => $this->offset]]
+        $response = $this->httpClient->request(
+            'GET',
+            $url,
+            ['query' => ['offset' => $this->offset]]
         );
         $data = json_decode($response->getBody()->getContents(), true);
 
@@ -58,11 +60,15 @@ class TgBotAPI
     {
         $url = sprintf(self::API_URL_PATTERN, $this->token, 'sendMessage');
 
-        $result = $this->httpClient->request('POST', $url, [
+        $result = $this->httpClient->request(
+            'POST',
+            $url,
+            [
             'json' => [
                 'chat_id' => $toChat,
                 'text' => $text,
             ],
-        ]);
+            ]
+        );
     }
 }
