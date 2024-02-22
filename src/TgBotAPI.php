@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MagaBot;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7;
 
 class TgBotAPI
 {
@@ -68,6 +69,28 @@ class TgBotAPI
                 'chat_id' => $toChat,
                 'text' => $text,
             ],
+            ]
+        );
+    }
+
+    public function sendPhotos(int $toChat, string $path): void
+    {
+        $body = Psr7\Utils::tryFopen($path, 'r');
+        $url = sprintf(self::API_URL_PATTERN, $this->token, 'sendPhoto');
+        $result = $this->httpClient->request(
+            'POST',
+            $url,
+            [
+                'multipart' => [
+                    [
+                        'name'     => 'chat_id',
+                        'contents' => $toChat
+                    ],
+                    [
+                        'name'     => 'photo',
+                        'contents' => $body
+                    ]
+                ]
             ]
         );
     }

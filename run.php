@@ -19,7 +19,14 @@ $commands = new Commands();
 while (true) {
     foreach ($botApi->getUpdates() as $update) {
         echo sprintf('%s sent: %s'.PHP_EOL, $update->senderName, $update->text);
-        $botApi->sendMessage($update->chatId, $commands->execute($update->text));
+        if ($update->text === '!show content')
+        {
+            $botApi->sendPhotos($update->chatId, $commands->execute($update->text));
+        }
+        else
+        {
+            $botApi->sendMessage($update->chatId, $commands->execute($update->text));
+        }
     }
 
     sleep(5);

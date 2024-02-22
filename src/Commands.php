@@ -30,9 +30,9 @@ class Commands
     {
         return date('H:i');
     }
-    private function showContent()
+    private function showContent(): string
     {
-        return readfile(__DIR__ .'/pepe.webp');
+        return 'C:\Users\omarn\Documents\GitHub\MagaBot\images\pepe.webp';
     }
     private function help():string
     {
@@ -43,4 +43,3 @@ class Commands
         return 'All command list: ' . implode(', ' , $commandList);
     }
 }
-//сделать так, чтоб команды были одним текстом, а функции в классе другим
