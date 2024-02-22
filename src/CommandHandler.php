@@ -3,58 +3,48 @@ declare(strict_types=1);
 
 namespace MagaBot;
 
+use MagaBot\Commands\CommandInterface;
+
 class CommandHandler
 {
     private readonly TgBotAPI $botApi;
-    private array $trueCommand;
+
+    /**
+     * @var CommandInterface[]
+     */
+    private array $commands = [];
 
     public function __construct(TgBotAPI $botAPI)
     {
         $this->botApi = $botAPI;
-        $this->trueCommand['!show date'] = 'showDate';
-        $this->trueCommand['!show time'] = 'showTime';
-        $this->trueCommand['!show content'] = 'showContent';
-        $this->trueCommand['!help'] = 'help';
     }
 
-    public function handle(IncomingMessage $command): void
+    public function addCommand(CommandInterface $command): void
     {
-        if (!isset($this->trueCommand[$command->text])) {
-            $this->botApi->sendMessage(
-                $command->chatId,
-                'Unknown command. Write !help to see list of available commands.'
-            );
+        $this->commands[] = $command;
+    }
 
-            return;
+    public function handle(IncomingMessage $message): void
+    {
+        foreach ($this->commands as $command) {
+            if ($command->canHandle($message)) {
+                $command->handle($message, $this->botApi);
+
+                return;
+            }
         }
 
-        $this->{$this->trueCommand[$command->text]}($command);
+        $this->help($message->chatId);
     }
 
-    private function showDate(IncomingMessage $command): void
-    {
-        $this->botApi->sendMessage($command->chatId, date('d.m.Y'));
-    }
-
-    private function showTime(IncomingMessage $command): void
-    {
-        $this->botApi->sendMessage($command->chatId, date('H:i'));
-    }
-
-    private function showContent(IncomingMessage $command): void
-    {
-        $picture = __DIR__ . '/../images/pepe.webp';
-
-        $this->botApi->sendPhoto($command->chatId, $picture);
-    }
-
-    private function help(IncomingMessage $command): void
+    private function help(int $chatId): void
     {
         $commandList = [];
-        foreach ($this->trueCommand as $commandText => $method) {
-            $commandList[] = $commandText;
+        foreach ($this->commands as $command) {
+            $commandAliases = $command->listAliases();
+            array_push($commandList, ...$commandAliases);
         }
 
-        $this->botApi->sendMessage($command->chatId, 'All command list: ' . implode(', ', $commandList));
+        $this->botApi->sendMessage($chatId, 'All command list: ' . implode(', ', $commandList));
     }
 }

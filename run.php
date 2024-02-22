@@ -15,6 +15,8 @@ $token = file_get_contents(__DIR__ .'/tgtoken.txt');
 $botApi = new TgBotAPI($token);
 
 $commands = new CommandHandler($botApi);
+$commands->addCommand(new \MagaBot\Commands\TimeTeller());
+$commands->addCommand(new \MagaBot\Commands\MemeSender());
 
 while (true) {
     foreach ($botApi->getUpdates() as $update) {
