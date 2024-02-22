@@ -60,8 +60,7 @@ class TgBotAPI
     public function sendMessage(int $toChat, string $text): void
     {
         $url = sprintf(self::API_URL_PATTERN, $this->token, 'sendMessage');
-
-        $result = $this->httpClient->request(
+        $this->httpClient->request(
             'POST',
             $url,
             [
@@ -77,7 +76,7 @@ class TgBotAPI
     {
         $body = Psr7\Utils::tryFopen($path, 'r');
         $url = sprintf(self::API_URL_PATTERN, $this->token, 'sendPhoto');
-        $result = $this->httpClient->request(
+        $this->httpClient->request(
             'POST',
             $url,
             [

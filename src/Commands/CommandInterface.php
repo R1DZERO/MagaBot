@@ -8,7 +8,7 @@ use MagaBot\TgBotAPI;
 
 interface CommandInterface
 {
-    public function listAliases(): array;
+    public function listUsages(): array;
 
     public function canHandle(IncomingMessage $message): bool;
 

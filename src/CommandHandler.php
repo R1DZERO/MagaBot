@@ -41,10 +41,10 @@ class CommandHandler
     {
         $commandList = [];
         foreach ($this->commands as $command) {
-            $commandAliases = $command->listAliases();
-            array_push($commandList, ...$commandAliases);
+            $listUsages = $command->listUsages();
+            array_push($commandList, ...$listUsages);
         }
 
-        $this->botApi->sendMessage($chatId, 'All command list: ' . implode(', ', $commandList));
+        $this->botApi->sendMessage($chatId, 'All command list: ' . implode(', ', $commandList)) . '.';
     }
 }

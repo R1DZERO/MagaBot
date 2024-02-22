@@ -6,23 +6,23 @@ namespace MagaBot\Commands;
 use MagaBot\IncomingMessage;
 use MagaBot\TgBotAPI;
 
-class MemeSender implements CommandInterface
+class HighFive implements CommandInterface
 {
-    private const COMMAND_BASIC = '!show content';
+    private const COMMAND = '!high five';
 
     public function listUsages(): array
     {
-        return [self::COMMAND_BASIC];
+        return [self::COMMAND];
     }
 
     public function canHandle(IncomingMessage $message): bool
     {
-        return $message->text === self::COMMAND_BASIC;
+        return $message->text === self::COMMAND;
     }
 
     public function handle(IncomingMessage $message, TgBotAPI $botAPI): void
     {
-        $picture = __DIR__ . '/../images/pepe.webp';
-        $botAPI->sendPhoto($message->chatId, $picture);
+        $botAPI->sendMessage($message->chatId, '✋');
     }
 }
+

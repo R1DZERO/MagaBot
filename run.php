@@ -17,6 +17,7 @@ $botApi = new TgBotAPI($token);
 $commands = new CommandHandler($botApi);
 $commands->addCommand(new \MagaBot\Commands\TimeTeller());
 $commands->addCommand(new \MagaBot\Commands\MemeSender());
+$commands->addCommand(new \MagaBot\Commands\HighFive());
 
 while (true) {
     foreach ($botApi->getUpdates() as $update) {

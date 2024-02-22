@@ -11,7 +11,7 @@ class TimeTeller implements CommandInterface
     private const COMMAND_SHOW_TIME = '!show time';
     private const COMMAND_SHOW_DATE = '!show date';
 
-    public function listAliases(): array
+    public function listUsages(): array
     {
         return [
             self::COMMAND_SHOW_TIME,
@@ -21,7 +21,7 @@ class TimeTeller implements CommandInterface
 
     public function canHandle(IncomingMessage $message): bool
     {
-        return in_array($message->text, $this->listAliases());
+        return in_array($message->text, $this->listUsages());
     }
 
     public function handle(IncomingMessage $message, TgBotAPI $botAPI): void
