@@ -73,7 +73,7 @@ class TgBotAPI
         );
     }
 
-    public function sendPhotos(int $toChat, string $path): void
+    public function sendPhoto(int $toChat, string $path): void
     {
         $body = Psr7\Utils::tryFopen($path, 'r');
         $url = sprintf(self::API_URL_PATTERN, $this->token, 'sendPhoto');
